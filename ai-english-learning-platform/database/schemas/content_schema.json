@@ -1,0 +1,37 @@
+{
+  "content": {
+    "title": "string",
+    "description": "string",
+    "type": "string",
+    "age_group": {
+      "min": 5,
+      "max": 14
+    },
+    "content_type": [
+      "vocabulary",
+      "pronunciation",
+      "grammar",
+      "sentence_formation",
+      "comprehension",
+      "essay_writing"
+    ],
+    "media": {
+      "images": [
+        {
+          "url": "string",
+          "alt_text": "string"
+        }
+      ],
+      "audio": {
+        "url": "string",
+        "duration": "string"
+      },
+      "video": {
+        "url": "string",
+        "duration": "string"
+      }
+    },
+    "created_at": "string",
+    "updated_at": "string"
+  }
+}

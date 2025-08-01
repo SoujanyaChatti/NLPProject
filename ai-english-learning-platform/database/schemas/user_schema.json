@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Unique identifier for the user"
+    },
+    "username": {
+      "type": "string",
+      "description": "Username chosen by the user"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the user"
+    },
+    "password_hash": {
+      "type": "string",
+      "description": "Hashed password for user authentication"
+    },
+    "age": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 14,
+      "description": "Age of the user"
+    },
+    "language_preference": {
+      "type": "string",
+      "description": "Preferred language for learning"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the user account was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the user account was last updated"
+    }
+  },
+  "required": ["user_id", "username", "email", "password_hash", "age", "created_at", "updated_at"]
+}

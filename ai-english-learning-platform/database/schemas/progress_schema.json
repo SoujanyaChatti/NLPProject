@@ -1,0 +1,87 @@
+{
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "Unique identifier for the user"
+    },
+    "progress": {
+      "type": "object",
+      "properties": {
+        "vocabulary": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of vocabulary words learned by the user"
+        },
+        "pronunciation": {
+          "type": "object",
+          "properties": {
+            "correctAttempts": {
+              "type": "integer",
+              "description": "Number of correct pronunciation attempts"
+            },
+            "totalAttempts": {
+              "type": "integer",
+              "description": "Total pronunciation attempts made by the user"
+            }
+          },
+          "required": ["correctAttempts", "totalAttempts"]
+        },
+        "grammar": {
+          "type": "object",
+          "properties": {
+            "correctAnswers": {
+              "type": "integer",
+              "description": "Number of correct grammar answers"
+            },
+            "totalQuestions": {
+              "type": "integer",
+              "description": "Total grammar questions attempted"
+            }
+          },
+          "required": ["correctAnswers", "totalQuestions"]
+        },
+        "comprehension": {
+          "type": "object",
+          "properties": {
+            "correctResponses": {
+              "type": "integer",
+              "description": "Number of correct comprehension responses"
+            },
+            "totalResponses": {
+              "type": "integer",
+              "description": "Total comprehension questions attempted"
+            }
+          },
+          "required": ["correctResponses", "totalResponses"]
+        },
+        "essayWriting": {
+          "type": "object",
+          "properties": {
+            "submittedEssays": {
+              "type": "integer",
+              "description": "Number of essays submitted by the user"
+            },
+            "feedbackReceived": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "List of feedback received on submitted essays"
+            }
+          },
+          "required": ["submittedEssays", "feedbackReceived"]
+        }
+      },
+      "required": ["vocabulary", "pronunciation", "grammar", "comprehension", "essayWriting"]
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the last progress update"
+    }
+  },
+  "required": ["userId", "progress", "lastUpdated"]
+}

@@ -1,0 +1,16 @@
+Flask
+Flask-Cors
+Flask-RESTful
+Flask-PyMongo
+pydantic
+transformers
+torch
+nltk
+spacy
+wordnet
+vosk
+gtts
+rasa
+python-dotenv
+pytest
+pytest-flask
