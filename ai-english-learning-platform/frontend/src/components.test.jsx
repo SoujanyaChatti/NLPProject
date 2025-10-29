@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import WordOfTheDay from '../../src/components/WordOfTheDay';
-import PronunciationPractice from '../../src/components/PronunciationPractice';
-import EssayAssistant from '../../src/components/EssayAssistant';
-import ComprehensionAnalyzer from '../../src/components/ComprehensionAnalyzer';
+import WordOfTheDay from './components/WordOfTheDay';
+import PronunciationPractice from './components/PronunciationPractice';
+import EssayAssistant from './components/EssayAssistant';
+import ComprehensionAnalyzer from './components/ComprehensionAnalyzer';
 
-describe('Frontend Components Tests', () => {
-  
+describe('Frontend Components', () => {
+
   test('renders Word of the Day component', () => {
     render(<WordOfTheDay />);
     const wordElement = screen.getByText(/Word of the Day/i);
@@ -21,7 +21,7 @@ describe('Frontend Components Tests', () => {
 
   test('renders Essay Assistant component', () => {
     render(<EssayAssistant />);
-    const essayElement = screen.getByText(/Essay Assistant/i);
+    const essayElement = screen.getByText(/Essay Writing Assistant/i);
     expect(essayElement).toBeInTheDocument();
   });
 
