@@ -3,6 +3,7 @@ import WordOfTheDay from '../components/WordOfTheDay';
 import PronunciationPractice from '../components/PronunciationPractice';
 import EssayAssistant from '../components/EssayAssistant';
 import ComprehensionAnalyzer from '../components/ComprehensionAnalyzer';
+import ConversationalBot from '../components/ConversationalBot';
 
 const HomePage = () => {
     return (
@@ -12,6 +13,7 @@ const HomePage = () => {
             <PronunciationPractice />
             <EssayAssistant />
             <ComprehensionAnalyzer />
+            <ConversationalBot />
         </div>
     );
 };

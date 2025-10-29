@@ -1,31 +1,73 @@
 import pytest
 from fastapi.testclient import TestClient
-from backend.app.main import app
+from app.main import app
+import mongomock
+from app.database import get_database
+import os
 
-client = TestClient(app)
+@pytest.fixture
+def mock_db(monkeypatch):
+    client = mongomock.MongoClient()
+    db = client['ai-english-learning-platform']
 
-def test_read_root():
-    response = client.get("/")
+    def mock_get_database():
+        return db
+
+    monkeypatch.setattr("app.database.get_database", mock_get_database)
+    monkeypatch.setattr("app.models.word_of_the_day.get_database", mock_get_database)
+    monkeypatch.setattr("app.services.comprehension_service.get_database", mock_get_database)
+    return db
+
+@pytest.fixture
+def client(mock_db):
+    return TestClient(app)
+
+def test_get_word_of_the_day(client):
+    response = client.get("/api/word-of-the-day")
     assert response.status_code == 200
-    assert response.json() == {"message": "Welcome to the AI-Powered English Learning Platform!"}
+    data = response.json()
+    assert "word" in data
+    assert "definition" in data
+    assert "example" in data
 
-def test_word_of_the_day():
-    response = client.get("/api/word_of_the_day")
+def test_check_pronunciation(client):
+    with open("ai-english-learning-platform/tests/backend/test.wav", "rb") as f:
+        response = client.post(
+            "/api/pronunciation",
+            params={"text": "hello"},
+            files={"audio": ("test.wav", f, "audio/wav")}
+        )
     assert response.status_code == 200
-    assert "word" in response.json()
-    assert "definition" in response.json()
+    data = response.json()
+    assert "word" in data
+    assert "is_correct" in data
+    assert "feedback" in data
+    assert "phonetic_distance" in data
 
-def test_pronunciation_endpoint():
-    response = client.post("/api/pronunciation", json={"word": "example"})
+def test_essay_assistant(client):
+    response = client.post("/api/essay-assistant", params={"topic": "A memorable journey", "essay": "This is an essay about a memorable journey."})
     assert response.status_code == 200
-    assert "phonetic" in response.json()
+    data = response.json()
+    assert "suggestions" in data
+    assert "grammar_errors" in data
+    assert "style_improvements" in data
 
-def test_essay_assistant():
-    response = client.post("/api/essay_assistant", json={"topic": "My favorite animal"})
+def test_get_comprehension_passage(client):
+    response = client.get("/api/comprehension/passage")
     assert response.status_code == 200
-    assert "suggestions" in response.json()
+    data = response.json()
+    assert "passage" in data
+    assert "questions" in data
 
-def test_comprehension_analysis():
-    response = client.post("/api/comprehension", json={"passage": "This is a test passage.", "question": "What is this?"})
+def test_submit_comprehension_answers(client):
+    response = client.post("/api/comprehension/submit", json=["brown", "the lazy dog"])
     assert response.status_code == 200
-    assert "answer" in response.json()
+    data = response.json()
+    assert "score" in data
+    assert "feedback" in data
+
+def test_bot(client):
+    response = client.post("/api/bot", params={"message": "hello"})
+    assert response.status_code == 200
+    data = response.json()
+    assert "response" in data
